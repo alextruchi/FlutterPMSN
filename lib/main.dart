@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:psmn2/screens/dashboard_screen.dart';
 import 'package:psmn2/screens/despensa.dart';
+import 'package:psmn2/screens/register_screen.dart';
 import 'package:psmn2/screens/splash_screen.dart';
 import 'package:psmn2/settings/app_value_notifier.dart';
 import 'package:psmn2/settings/theme.dart';
@@ -20,9 +21,11 @@ class MyApp extends StatelessWidget {
           ? ThemeApp().darkTheme(context)
           : ThemeApp().lightTheme(context),
           home: splashScreen(),
+          debugShowCheckedModeBanner: false,
           routes: {
             "/dash" : (BuildContext context) => DashBoardScreen(),
             "/despensa":(BuildContext context) => DespensaScreen(),
+            "/registro":(BuildContext context) => registerScreen(),
           },
         );
       }

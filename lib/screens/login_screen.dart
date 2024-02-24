@@ -42,10 +42,10 @@ class _loginScreenState extends State<loginScreen> {
                 )
         ),
         child: Stack( //Que es?
-          alignment: Alignment.center, //con esto el titulo apareceria en el centro
+          alignment: Alignment.topCenter, //con esto el titulo apareceria en el centro
           children: [
             Positioned( //Permite crear un espacio donde todos elementos estaran en absolute, forzosamente antes debe de tener un stack
-              top: 500,
+              top: 400,
               child: Opacity(
                 opacity: .5,
                 child: Container(
@@ -71,9 +71,9 @@ class _loginScreenState extends State<loginScreen> {
             ),
             Image.asset("images/letrero_fondo.png"),
             Positioned(
-              bottom: 10,
+              bottom: 50,
               child: Container(
-                height: 200,
+                height: 250,
                 width: MediaQuery.of(context).size.width*.9,
                 child: ListView(
                 shrinkWrap: true,
@@ -112,6 +112,16 @@ class _loginScreenState extends State<loginScreen> {
                     Buttons.GitHub,
                     onPressed: () {},
                     ),
+
+                    const SizedBox(height: 15,),
+
+                    ElevatedButton.icon(
+                      onPressed: (){
+                        Navigator.pushNamed(context, '/registro');
+                      },
+                      icon: const Icon(Icons.app_registration, color: Colors.black,),
+                      label: const Text("Register account", style: TextStyle(color: Colors.black),)
+                    )
                 ],
               )
               ),

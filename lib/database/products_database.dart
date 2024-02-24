@@ -27,7 +27,7 @@ class ProductsDatabase {
           idProducto integer primary key, 
           nomProducto varchar(30),
           cantProducto integer,
-          fechaCaducidad date,
+          fechaCaducidad varchar(10)
         )''';
         db.execute(query);
       },
