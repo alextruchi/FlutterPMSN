@@ -1,3 +1,4 @@
+import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/material.dart';
 import 'package:psmn2/database/products_database.dart';
 import 'package:psmn2/model/products_model.dart';
@@ -93,15 +94,53 @@ class _DespensaScreenState extends State<DespensaScreen> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                onPressed: (){
+                onPressed: () async {
                   _showModal(context, productos);
+                  
                 },
                 icon: Icon(Icons.edit),
-
               ),
               IconButton(
-                onPressed: (){
+                onPressed: () async {
                   //_showModal();
+                  ArtDialogResponse response = await ArtSweetAlert.show(
+                      barrierDismissible: false,
+                      context: context,
+                      artDialogArgs: ArtDialogArgs(
+                        denyButtonText: "Cancel",
+                        title: "Are you sure?",
+                        text: "You won't be able to revert this!",
+                        confirmButtonText: "Yes, delete it",
+                        type: ArtSweetAlertType.warning
+                      )
+                  );
+
+                  if (response == null) {
+                    return;
+                  }
+
+                  if (response.isTapConfirmButton) {
+                    productsDB!.eliminar(productos.idProducto!).then((value){
+                      if(value>0){
+                        ArtSweetAlert.show(
+                        context: context,
+                        artDialogArgs: ArtDialogArgs(
+                            type: ArtSweetAlertType.success,
+                            title: "Se elimino correctamente!"));
+                        AppValueNotifiier.banProducts.value = !AppValueNotifiier.banProducts.value;//Vuelve a reconstruir el builder con su cambio de valor
+                      }else{
+
+                      }
+                    });
+                    /*ArtSweetAlert.show(
+                        context: context,
+                        artDialogArgs: ArtDialogArgs(
+                            type: ArtSweetAlertType.success,
+                            title: "Deleted!"));*/
+
+                    
+                    return;
+                  }
                 },
                 icon: Icon(Icons.delete),
                 

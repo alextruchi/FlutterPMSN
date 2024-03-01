@@ -45,7 +45,7 @@ class _loginScreenState extends State<loginScreen> {
           alignment: Alignment.topCenter, //con esto el titulo apareceria en el centro
           children: [
             Positioned( //Permite crear un espacio donde todos elementos estaran en absolute, forzosamente antes debe de tener un stack
-              top: 400,
+              top: 350,
               child: Opacity(
                 opacity: .5,
                 child: Container(
@@ -55,7 +55,7 @@ class _loginScreenState extends State<loginScreen> {
                     borderRadius: BorderRadius.circular(20)
                   ),
                   margin: EdgeInsets.symmetric(horizontal: 40),
-                  height: 130,
+                  height: 160,
                   width: MediaQuery.of(context).size.width * .9,
                   child: ListView( //Si se conoce cuantos elementos seran se deja igual, sino se usa un .builder
                     //Se debe de envolver en un container para controlar su posicion
@@ -89,7 +89,7 @@ class _loginScreenState extends State<loginScreen> {
                         /*Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => new DashBoardScreen()));*/
-                          Navigator.pushNamed(context, "/dash").then((value){ //Con esto podemos realizar una accion antes de cambiar de pantalla
+                          Navigator.pushNamed(context, "/onBoarding").then((value){ //Con esto podemos realizar una accion antes de cambiar de pantalla
                             setState(() {
                               isloading = !isloading;
                             });

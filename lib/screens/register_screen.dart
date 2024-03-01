@@ -18,6 +18,7 @@ class _registerScreenState extends State<registerScreen> {
   File? _imagenSeleccionada = null;
 
   bool isFoto = false;
+  bool isContra = false;
 
   final conEmail = TextEditingController();
   final conNombre = TextEditingController();
@@ -91,8 +92,8 @@ class _registerScreenState extends State<registerScreen> {
 
     final btnGuardar = ElevatedButton.icon(
       onPressed: (){
-        if(conEmail.text=="" || conNombre.text=="" || conContra.text==""){
-          var snackbar = SnackBar(content: Text("Faltan campos por completar.."));
+        if(conEmail.text=="" || conNombre.text=="" || conContra.text=="" || _imagenSeleccionada==null || isContra==false){
+          var snackbar = SnackBar(content: Text("Faltan datos por agregar.."));
           ScaffoldMessenger.of(context).showSnackBar(snackbar);
         }else{
           var snackbar = SnackBar(content: Text("El usuario se ha agregado.."));
@@ -190,9 +191,14 @@ class _registerScreenState extends State<registerScreen> {
               top: 500,
               child: new FlutterPwValidator(
                       width: 350,
-                      height: 120,
+                      height: 140,
                       minLength: 8,
-                      onSuccess: (){},
+                      onSuccess: (){
+                        isContra = true;
+                      },
+                      onFail: (){
+                        isContra = false;
+                      },
                       uppercaseCharCount: 1,
                       numericCharCount: 1,
                       specialCharCount: 1,
