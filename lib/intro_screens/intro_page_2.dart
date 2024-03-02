@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 
 class introPage2 extends StatefulWidget {
@@ -48,7 +49,7 @@ class _introPage2State extends State<introPage2> with SingleTickerProviderStateM
                 height: 250,
                 left: 0,
                 child: Lottie.network("https://lottie.host/9c374188-71b5-446b-9931-1e517c85f7da/sUFypsEvOz.json")
-              ),
+              ).animate().fadeIn(duration: 2000.ms),
               Positioned(
                 top: 40,
                 child: DefaultTextStyle(
@@ -64,24 +65,24 @@ class _introPage2State extends State<introPage2> with SingleTickerProviderStateM
                         
                       },
                     ),
-                  )
+                ).animate().fadeIn(duration: 2000.ms).scale()
               ),
               Positioned(
                 top: 150,
                 height: 200,
                 left: 195,
                 child: Lottie.network("https://lottie.host/0bbd901c-0960-4bee-a1e8-81217f6cef45/pTKdNyNIGK.json")
-              ),
+              ).animate().fadeIn(duration: 2000.ms),
               Positioned(
                 top: 320,
                 left: 200,
                 child: Image.asset("images/paso2.png", height: 50,)
               ),
               Positioned(
-                top: 380,
-                left: 210,
+                top: 370,
+                left: 220,
                 width: 180,
-                child: Text("Da un 'toque' a este icono y listo", style: TextStyle(fontSize: 20, color: Colors.white),)
+                child: Text("Da un 'toque' al siguiente icono y listo", style: TextStyle(fontSize: 20, color: Colors.white),)
               ),
               Positioned(
                 top: 430,
@@ -100,7 +101,7 @@ class _introPage2State extends State<introPage2> with SingleTickerProviderStateM
                 child: Lottie.network(
                     "https://lottie.host/1d1be01c-084f-4e77-b079-89ff028ea429/K03vWeH9Pq.json",
                     controller: _controller),
-                )
+                ).animate().fadeIn(duration: 2000.ms)
               ),
               Positioned(
                 top: 120,

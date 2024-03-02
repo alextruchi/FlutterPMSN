@@ -13,7 +13,6 @@ class onBoardingScreen extends StatefulWidget {
 }
 
 class _onBoardingScreenState extends State<onBoardingScreen> {
-
   PageController _controller = PageController();
 
   bool onLastPage = false;
@@ -21,9 +20,9 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          PageView(
+        body: Stack(
+      children: [
+        PageView(
             controller: _controller,
             onPageChanged: (index) {
               setState(() {
@@ -35,36 +34,49 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
               introPage2(),
               introPage3()
             ],
-          ),
-
-          Container(
-            alignment: Alignment(0,0.75),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                /*GestureDetector(
+        ),
+        Container(
+          alignment: Alignment(0, 0.75),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              /*GestureDetector(
                   child: Text("Skip"),
                   onTap: (){
                     _controller.jumpToPage(2);
                   },
                 ),*/
-                ElevatedButton.icon(
+              ElevatedButton.icon(
                   onPressed: () {
                     _controller.jumpToPage(2);
                   },
-                  icon: Icon(Icons.double_arrow, color: Colors.black,),
-                  label: Text("Saltar", style: TextStyle(color: Colors.black),)
-                ),
-                SmoothPageIndicator(controller: _controller, count: 3,),
-                onLastPage ?
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/dash");
-                  },
-                  icon: Icon(Icons.exit_to_app, color: Colors.black,),
-                  label: Text("Hecho", style: TextStyle(color: Colors.black),)
-                )
-                /*GestureDetector(
+                  icon: Icon(
+                    Icons.double_arrow,
+                    color: Colors.black,
+                  ),
+                  label: Text(
+                    "Saltar",
+                    style: TextStyle(color: Colors.black),
+                  )),
+              SmoothPageIndicator(
+                controller: _controller,
+                effect: JumpingDotEffect(),
+                count: 3,
+              ),
+              onLastPage
+                  ? ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/dash");
+                      },
+                      icon: Icon(
+                        Icons.exit_to_app,
+                        color: Colors.black,
+                      ),
+                      label: Text(
+                        "Hecho",
+                        style: TextStyle(color: Colors.black),
+                      ))
+                  /*GestureDetector(
                   child: Text("Done"),
                   onTap: () {
                     Navigator.push(
@@ -77,17 +89,22 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
                     );
                   },
                 )*/
-                : ElevatedButton.icon(
-                  onPressed: () {
-                    _controller.nextPage(
-                      duration: Duration(milliseconds: 500),
-                      curve: Curves.easeIn,
-                    );
-                  },
-                  icon: Icon(Icons.arrow_right_alt, color: Colors.black,),
-                  label: Text("Siguiente", style: TextStyle(color: Colors.black),)
-                ),
-                /*GestureDetector(
+                  : ElevatedButton.icon(
+                      onPressed: () {
+                        _controller.nextPage(
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.easeIn,
+                        );
+                      },
+                      icon: Icon(
+                        Icons.arrow_right_alt,
+                        color: Colors.black,
+                      ),
+                      label: Text(
+                        "Siguiente",
+                        style: TextStyle(color: Colors.black),
+                      )),
+              /*GestureDetector(
                   child: Text("Next"),
                   onTap: () {
                     _controller.nextPage(
@@ -96,11 +113,10 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
                     );
                   },
                 )*/
-              ],
-            ),
-          )
-        ],
-      )
-    );
+            ],
+          ),
+        )
+      ],
+    ));
   }
 }

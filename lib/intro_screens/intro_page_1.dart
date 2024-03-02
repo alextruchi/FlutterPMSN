@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 
 class introPage1 extends StatelessWidget {
@@ -17,7 +18,7 @@ class introPage1 extends StatelessWidget {
               top: 140,
               height: 300,
               child: Lottie.network("https://lottie.host/855957ba-8166-4721-955e-d54d4ccf8b2d/t9DjWP7RtT.json"),
-            ),
+            ).animate().fadeIn(duration: 2500.ms),
             Positioned(
                 top: 40,
                 child: DefaultTextStyle(
@@ -34,7 +35,7 @@ class introPage1 extends StatelessWidget {
                       },
                     ),
                   )
-              ),
+              ).animate().fadeIn(duration: 2000.ms).scale(),
             Positioned(
               top: 500,
               child: Row(
