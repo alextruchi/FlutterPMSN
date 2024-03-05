@@ -49,6 +49,7 @@ dependencies:
   art_sweetalert: ^0.0.5
   smooth_page_indicator: ^1.1.0
   flutter_animate: ^4.5.0
+  dio: ^5.4.1
 
 dev_dependencies:
   flutter_test:
