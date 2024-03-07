@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:psmn2/screens/dashboard_screen.dart';
 import 'package:psmn2/screens/despensa.dart';
+import 'package:psmn2/screens/detail_movie_screen.dart';
 import 'package:psmn2/screens/onBoarding_screen.dart';
+import 'package:psmn2/screens/popular_movies_screen.dart';
 import 'package:psmn2/screens/register_screen.dart';
 import 'package:psmn2/screens/splash_screen.dart';
 import 'package:psmn2/settings/app_value_notifier.dart';
@@ -23,11 +25,13 @@ class MyApp extends StatelessWidget {
           : ThemeApp().lightTheme(context),
           home: splashScreen(),
           debugShowCheckedModeBanner: false,
-          routes: {
-            "/dash" : (BuildContext context) => DashBoardScreen(),
-            "/despensa":(BuildContext context) => DespensaScreen(),
-            "/registro":(BuildContext context) => registerScreen(),
-            "/onBoarding": (BuildContext context) => onBoardingScreen(),
+          routes: { //Ponerle const hace que sea mas eficiente abrir un stateless
+            "/dash" : (BuildContext context) => const DashBoardScreen(),
+            "/despensa":(BuildContext context) => const DespensaScreen(),
+            "/registro":(BuildContext context) => const registerScreen(),
+            "/onBoarding": (BuildContext context) => const onBoardingScreen(),
+            "/movies": (BuildContext context) => const PopularMoviesScreen(),
+            "/detail":(BuildContext context) => const DetailMovieScreen(),
           },
         );
       }
