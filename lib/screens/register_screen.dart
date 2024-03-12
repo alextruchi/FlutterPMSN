@@ -5,6 +5,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:psmn2/services/email_auth_firebase.dart';
 
 class registerScreen extends StatefulWidget {
   const registerScreen({super.key});
@@ -14,6 +15,8 @@ class registerScreen extends StatefulWidget {
 }
 
 class _registerScreenState extends State<registerScreen> {
+
+  final emailAuthFirebase = EmailAuthFirebase();
 
   File? _imagenSeleccionada = null;
 
@@ -93,11 +96,14 @@ class _registerScreenState extends State<registerScreen> {
     final btnGuardar = ElevatedButton.icon(
       onPressed: (){
         if(conEmail.text=="" || conNombre.text=="" || conContra.text=="" || _imagenSeleccionada==null || isContra==false){
-          var snackbar = SnackBar(content: Text("Faltan datos por agregar.."));
-          ScaffoldMessenger.of(context).showSnackBar(snackbar);
+          //Se le agrego un .then para que se espere a que acabe ese codigo
+            var snackbar = SnackBar(content: Text("Faltan datos por agregar.."));
+            ScaffoldMessenger.of(context).showSnackBar(snackbar);
         }else{
+          emailAuthFirebase.signUpUser(name: conNombre.text, password: conContra.text, email: conEmail.text).then((value) {
           var snackbar = SnackBar(content: Text("El usuario se ha agregado.."));
           ScaffoldMessenger.of(context).showSnackBar(snackbar);
+          });
         }
       },
       icon: Icon(Icons.send, color: Colors.black,),

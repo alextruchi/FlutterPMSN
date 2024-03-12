@@ -50,6 +50,9 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   flutter_animate: ^4.5.0
   dio: ^5.4.1
+  firebase_core: ^2.27.0
+  cloud_firestore: ^4.15.8
+  firebase_auth: ^4.17.8
 
 dev_dependencies:
   flutter_test:
