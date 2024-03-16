@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
             "/onBoarding": (BuildContext context) => const onBoardingScreen(),
             "/movies": (BuildContext context) => const PopularMoviesScreen(),
             "/detail":(BuildContext context) => const DetailMovieScreen(),
+            "/":(BuildContext context) => const DetailMovieScreen(),
           },
         );
       }

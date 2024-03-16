@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:psmn2/screens/dashboard_screen.dart';
+import 'package:psmn2/services/email_auth_firebase.dart';
 
 class loginScreen extends StatefulWidget {
   const loginScreen({super.key});
@@ -11,27 +12,33 @@ class loginScreen extends StatefulWidget {
 }
 
 class _loginScreenState extends State<loginScreen> {
+  final authfirebase = EmailAuthFirebase();
   
   bool isloading = false;
 
-  final textUser = TextField(
+  final conEmail = TextEditingController();
+  final conContra = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+
+    final textUser = TextFormField(
     keyboardType: TextInputType.emailAddress,
+    controller: conEmail,
     decoration: const InputDecoration(
       border: OutlineInputBorder()
     ),
   );
 
-  final pwdUser = TextField(
+  final pwdUser = TextFormField(
     keyboardType: TextInputType.text,
+    controller: conContra,
     obscureText: true, //Hace las letras con *
     decoration: const InputDecoration(
       border: OutlineInputBorder()
     ),
   );
 
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -84,7 +91,8 @@ class _loginScreenState extends State<loginScreen> {
                       setState(() { //Con esto se cambia el valor de is loading provocando lo de abajo
                         isloading = !isloading;
                       });
-                      Future.delayed(new Duration(milliseconds: 5000), () {
+                      //Se cambiara esto para poder hacer el login
+                      /*Future.delayed(new Duration(milliseconds: 5000), () {
                         //Al manejar rutas ya no se usa esto
                         /*Navigator.push(
                           context,
@@ -94,13 +102,36 @@ class _loginScreenState extends State<loginScreen> {
                               isloading = !isloading;
                             });
                           });
+                      });*/
+                      //Tambien se debe de hacer esto para que tenga el mismo comportamiento del await
+                      authfirebase.signInUser(password: conContra.text, email: conEmail.text).then((value) {
+                        //Esto aplicaria cuando no sea el login
+                        if(!value){
+                          ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("No se ha logueado correctamente", style: TextStyle(fontWeight: FontWeight.w400),)
+                          )
+                          );
+                        }else{
+                          Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => new DashBoardScreen()));
+                          Navigator.pushNamed(context, "/onBoarding").then((value){ //Con esto podemos realizar una accion antes de cambiar de pantalla
+                            setState(() {
+                              isloading = !isloading;
+                            });
+                          });
+                        }
+                        
                       });
                     },
                     ),
 
                     SignInButton(
                     Buttons.Google,
-                    onPressed: () {},
+                    onPressed: () {
+
+                    },
                     ),
 
                     SignInButton(

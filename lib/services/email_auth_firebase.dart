@@ -20,18 +20,15 @@ class EmailAuthFirebase {
   }
 
   //Por ahora es por si todo esta bien con las credenciales y no se equivoca el usuario
-  Future<bool> signInUser({required name, required String password, required String email}) async{
-    bool bandera=false;
-    try{
-      final credenciales = await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
-      if(credenciales.user!=null){ //Verificacion de que si existe en la base de datos
-        if(credenciales.user!.emailVerified){
-          bandera=true;
-        }
+  Future<bool> signInUser({required String password, required String email}) async{
+    var band = false;
+    final UserCredential = await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+    if (UserCredential.user != null) {
+      if (UserCredential.user!.emailVerified) {
+        band = true;
       }
-    }catch(e){
-      
     }
-    return bandera;
+    return band;
+
   }
 }
