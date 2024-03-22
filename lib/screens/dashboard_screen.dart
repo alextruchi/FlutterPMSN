@@ -30,6 +30,15 @@ class DashBoardScreen extends StatelessWidget {
                 },
               ),
               ListTile( //Se utiliza para manejar titulos y subtitulos en cada elemento, ademas de tener cosas a los lados
+                leading: Icon(Icons.phone),
+                title: Text("Products firebase"),
+                subtitle: Text("Consulta de productos particulares"),
+                trailing: Icon(Icons.chevron_right),
+                onTap: (){
+                  Navigator.pushNamed(context, "/products");
+                },
+              ),
+              ListTile( //Se utiliza para manejar titulos y subtitulos en cada elemento, ademas de tener cosas a los lados
                 leading: Icon(Icons.shop),
                 title: Text("Mi despensa"),
                 subtitle: Text("Relación de productos que no voy a usar"),

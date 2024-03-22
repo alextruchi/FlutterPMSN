@@ -53,6 +53,8 @@ dependencies:
   firebase_core: ^2.27.0
   cloud_firestore: ^4.15.8
   firebase_auth: ^4.17.8
+  youtube_player_flutter: ^8.1.2
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:
@@ -92,10 +94,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: RocknRoll
+      fonts:
+        - asset: fonts/RocknRollOne-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

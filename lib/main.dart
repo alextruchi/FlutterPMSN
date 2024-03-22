@@ -6,6 +6,7 @@ import 'package:psmn2/screens/detail_movie_screen.dart';
 import 'package:psmn2/screens/onBoarding_screen.dart';
 import 'package:psmn2/screens/popular_movies_screen.dart';
 import 'package:psmn2/screens/register_screen.dart';
+import 'package:psmn2/screens/products_firebase_screen.dart';
 import 'package:psmn2/screens/splash_screen.dart';
 import 'package:psmn2/settings/app_value_notifier.dart';
 import 'package:psmn2/settings/theme.dart';
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
             "/onBoarding": (BuildContext context) => const onBoardingScreen(),
             "/movies": (BuildContext context) => const PopularMoviesScreen(),
             "/detail":(BuildContext context) => const DetailMovieScreen(),
-            "/":(BuildContext context) => const DetailMovieScreen(),
+            "/products":(BuildContext context) => const ProductsFirebaseScreen(),
           },
         );
       }
