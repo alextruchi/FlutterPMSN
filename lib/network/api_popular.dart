@@ -14,7 +14,7 @@ class ApiPopular{
 
       //print(response.data['results'].runtimeType); Comprueba si hay cosas en el response y el runtimeType dice de que tipo es lo recibido
 
-      final listMovies = response.data['results'] as List; //Con este parseo se obtiene los elementos de la respuesta ya que no esta directo en el data
+      final listMovies = response.data['results'] as List; //Con este parseo se obtiene los elementos de la respuesta que sean results ya que no esta directo en el data que obtuvimos
       return listMovies.map((movie) => PopularModel.fromMap(movie)).toList();// Quitamos el jsonDecode porque ya regresaba una lista tal cual y no era necesario
     }
     return null;

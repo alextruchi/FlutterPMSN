@@ -152,7 +152,7 @@ class _DespensaScreenState extends State<DespensaScreen> {
     );
   }
 
-//Este metodo servira para diferentes botones (crear, editar), es por eso que los textos que se ocupan se declaran aqui
+//Este metodo servirá para diferentes botones (crear, editar), es por eso que los textos que se ocupan se declaran aqui
   _showModal(context, ProductosModel? producto){
     final conNombre = TextEditingController(); //Controlador de la caja de texto
     final conCantidad = TextEditingController();
