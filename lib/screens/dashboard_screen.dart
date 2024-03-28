@@ -1,5 +1,6 @@
 import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/material.dart';
+import 'package:psmn2/network/api_popular.dart';
 import 'package:psmn2/settings/app_value_notifier.dart';
 
 class DashBoardScreen extends StatelessWidget {
@@ -26,6 +27,7 @@ class DashBoardScreen extends StatelessWidget {
                 subtitle: Text("Consulta de peliculas particulares"),
                 trailing: Icon(Icons.chevron_right),
                 onTap: (){
+                  ApiPopular().getSessionId();
                   Navigator.pushNamed(context, "/movies");
                 },
               ),

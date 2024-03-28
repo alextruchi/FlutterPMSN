@@ -12,6 +12,7 @@ class PopularMoviesScreen extends StatefulWidget {
 class _PopularMoviesScreenState extends State<PopularMoviesScreen> {
   
   ApiPopular? apiPopular;
+  bool? isFavorite = false;
 
   @override
   void initState() {
@@ -19,11 +20,25 @@ class _PopularMoviesScreenState extends State<PopularMoviesScreen> {
     super.initState();
     //Inicializa antes de todo
     apiPopular = ApiPopular();
+    
   }
   
   @override
   Widget build(BuildContext context) {
+    //Future<String?> sessionId = apiPopular!.getSessionId();
+    //print(sessionId);
+
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Peliculas populares"),
+        actions: [IconButton(
+          onPressed: (){
+            Navigator.pushNamed(context, "/favorites");
+          },
+          icon: Icon(Icons.favorite),
+        ),
+          ],
+      ),
       body: FutureBuilder(
         future: apiPopular!.getPopularMovie(),
         builder: (context,AsyncSnapshot<List<PopularModel>?> snapshot){ //El snapshot trae cada elemento del arreglo (Es una lista del popular model)
@@ -37,8 +52,10 @@ class _PopularMoviesScreenState extends State<PopularMoviesScreen> {
               ), 
               itemBuilder: (context,index){
                 return GestureDetector( //Se usa para poder darle un evento a un widgets que no tenga ontap
-                  onTap: (){
-                    Navigator.pushNamed(context, "/detail", arguments: snapshot.data![index]);
+                  onTap: () async {
+                    final actors = await apiPopular!.getMovieActors(snapshot.data![index].id!);
+                    final reviews = await apiPopular!.getReviewsMovies(snapshot.data![index].id!);
+                    Navigator.pushNamed(context, "/detail", arguments: {'popularMovies': snapshot.data![index], 'isFavorite': isFavorite, 'actors':actors, 'reviews': reviews});
                   },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
