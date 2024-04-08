@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
-import 'package:background_app_bar/background_app_bar.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -12,7 +13,13 @@ import 'package:psmn2/network/api_popular.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class DetailMovieScreen extends StatefulWidget {
-  const DetailMovieScreen({super.key});
+  var actors;
+  var reviews;
+  var isFavorite;
+  final PopularModel modelo;
+  
+
+  DetailMovieScreen({required this.actors, required this.reviews, required this.isFavorite, required this.modelo});
 
   @override
   State<DetailMovieScreen> createState() => _DetailMovieScreenState();
@@ -20,8 +27,13 @@ class DetailMovieScreen extends StatefulWidget {
 
 class _DetailMovieScreenState extends State<DetailMovieScreen> {
 
+  //Map<dynamic, dynamic>? arguments;
+
+
+  
+  
   final ApiPopular apiPopular = ApiPopular();
-  late bool isFavorite;
+  late bool esFavorito;
   //String? sessionId = SessionUsu().getSessionId();
   //late PopularModel popularModelAppBar;
   //String? sessionId;
@@ -29,12 +41,16 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
   @override
   Widget build(BuildContext context) {
     //final popularModel = ModalRoute.of(context)!.settings.arguments as PopularModel;
-    final arguments = ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>;
-    final PopularModel popularModel = arguments['popularMovies'] as PopularModel;
-    final List<ActorsMovieModel> actors = arguments['actors'];
-    final List<ReviewsMovieModel> reviews = arguments['reviews'];
+    //final arguments = ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>;
+    //final PopularModel popularModel = arguments['popularMovies'] as PopularModel;
+    final PopularModel popularModel = widget.modelo;
+    //final List<ActorsMovieModel> actors = arguments['actors'];
+    final List<ActorsMovieModel> actors = widget.actors;
+    //final List<ReviewsMovieModel> reviews = arguments['reviews'];
+    final List<ReviewsMovieModel> reviews = widget.reviews;
     //popularModelAppBar=popularModel;
-    isFavorite = arguments['isFavorite'];
+    //esFavorito = arguments['isFavorite'];
+    esFavorito = widget.isFavorite;
     String? sessionId = SessionUsu().getSessionId();
      /*return Center(
       child: Text(popularModel.title!),
@@ -43,14 +59,17 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
       appBar: AppBar(
         actions: [
           IconButton(onPressed: (){
-            if(isFavorite){
+            if(esFavorito){
               apiPopular.deleteFavoriteMovie(popularModel.id!, sessionId!).then((value){
                 if(value){
                   var snackbar = SnackBar(content: Text("Se ha eliminado de favoritos"));
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
                 }else{
-                  var snackbar = SnackBar(content: Text("No se ha podido quitar de favoritos"));
+                  var snackbar = SnackBar(content: Text("Se ha quitado de favoritos"));
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/favorites');
                 }
               });
             }else{
@@ -65,7 +84,37 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
               });
             }
           },
-          icon: Icon(Icons.favorite))
+          icon: esFavorito == true ? Icon(Icons.favorite, color: Colors.red[300],) : Icon(Icons.favorite_outline, color: Colors.red[300],),
+        ),
+        GestureDetector(
+          child: Text("Agregar/Quitar favorito  ", style: TextStyle(fontSize: 16),),
+          onTap: () {
+            if(esFavorito){
+              apiPopular.deleteFavoriteMovie(popularModel.id!, sessionId!).then((value){
+                if(value){
+                  var snackbar = SnackBar(content: Text("Se ha eliminado de favoritos"));
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                }else{
+                  var snackbar = SnackBar(content: Text("Se ha quitado de favoritos"));
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/favorites');
+                }
+              });
+            }else{
+              apiPopular.addFavoriteMovie(popularModel.id!, sessionId!).then((value){
+                if(value){
+                  var snackbar = SnackBar(content: Text("Se ha agregado a favoritos"));
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                }else{
+                  var snackbar = SnackBar(content: Text("Ya se ha agregado a favoritos"));
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                }
+              });
+            }
+          },
+        )
         ],
       ),
       body: /*ScaffoldLayoutBuilder(
@@ -93,8 +142,11 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                 child: FutureBuilder(
                   future: apiPopular.getTrailer(popularModel.id!),
                   builder: (context, snapshot) {
+                    var llave = snapshot.data.toString();
                     if (snapshot.hasData) {
-                      return YoutubePlayer(
+                      //print(snapshot.data.toString());
+                      if(llave.isNotEmpty){
+                        return YoutubePlayer(
                         controller: YoutubePlayerController(
                             initialVideoId: snapshot.data.toString(),
                             flags: const YoutubePlayerFlags(
@@ -102,6 +154,17 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                               mute: true,
                             )),
                       );
+                      }else{
+                        return const Center(
+                        child: Column(
+                          children: [
+                            Text("No se encontro ningun trailer disponible...", style: TextStyle(fontSize: 20),),
+                            SizedBox(height: 10,),
+                            Icon(Icons.error, size: 80,)
+                          ]
+                        ),
+                      );
+                      }        
                     } else {
                       return const Center(
                         child: CircularProgressIndicator(),
@@ -118,27 +181,41 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                   fontFamily: 'RocknRoll'
                 ),),
               ),
-              RatingBar(
-                initialRating: popularModel.voteAverage!/2,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                ratingWidget: RatingWidget(
-                    full: const Icon(Icons.star,
-                      color: Colors.amber
-                    ),
-                    half: const Icon(
-                      Icons.star_half,
-                      color: Colors.amber,
-                    ),
-                    empty: const Icon(
-                      Icons.star_outline,
-                      color: Colors.amber,
-                    )),
-                ignoreGestures: true,
-                onRatingUpdate: (value) {},
+              Padding(
+                padding: EdgeInsets.all(9),
+                child: RatingBar(
+                  initialRating: popularModel.voteAverage!/2,
+                  direction: Axis.horizontal,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  ratingWidget: RatingWidget(
+                      full: const Icon(Icons.star,
+                        color: Colors.red
+                      ),
+                      half: const Icon(
+                        Icons.star_half,
+                        color: Colors.red,
+                      ),
+                      empty: const Icon(
+                        Icons.star_outline,
+                        color: Colors.red,
+                      )),
+                  ignoreGestures: true,
+                  onRatingUpdate: (value) {},
+                ),
               ),
               SizedBox(height: 30,),
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: Text(
+                  "Sinopsis", textAlign: TextAlign.justify, style: const TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'RocknRoll',
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+              SizedBox(height: 10,),
               Padding(
                 padding: const EdgeInsets.all(15),
                 child: Text(
@@ -148,9 +225,9 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(height: 20,),
               const Text(
-              " Actores de la pelicula:",
+              " Actores de la pelicula",
               style: TextStyle(
                   fontSize: 25, color: Colors.black, fontFamily: 'RocknRoll'),
             ),
@@ -211,12 +288,13 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
               ),
               SizedBox(height: 10,),
               const Text(
-              " Opiniones de los usuarios:",
+              " Opiniones de los usuarios",
               style: TextStyle(
                   fontSize: 25, color: Colors.black, fontFamily: 'RocknRoll'),
             ),
             SizedBox(height: 20,),
-              Container(
+            reviews.isNotEmpty ?
+            Container(
                 height: 300,
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
@@ -250,7 +328,9 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                     );
                   }
                 ),
-              ),
+              ) : Container(
+                height: 100,
+                child: Text("No hay opiniones disponibles", textAlign: TextAlign.center, style: TextStyle(fontSize: 20),)),
             ]
           ),
         ),

@@ -93,7 +93,7 @@ class ApiPopular{
   }
 
   Future<List<PopularModel>?> getFavoriteMovies(String idSession) async {
-    final urlFavorites = "https://api.themoviedb.org/3/account/21058333/favorite/movies?api_key=b1b32b60793726c09330dd64adff713d&session_id=$idSession";
+    final urlFavorites = "https://api.themoviedb.org/3/account/21058333/favorite/movies?api_key=b1b32b60793726c09330dd64adff713d&session_id=$idSession&language=es-MX";
 
       final response = await dio.get(urlFavorites);
       if (response.statusCode == 200) {
@@ -157,5 +157,6 @@ class ApiPopular{
       final reviews = response.data['results'] as List;
       return reviews.map((reviews) => ReviewsMovieModel.fromMap(reviews)).toList();   
     }
+    return null;
   }
 }

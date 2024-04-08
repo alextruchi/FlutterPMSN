@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
             "/registro":(BuildContext context) => const registerScreen(),
             "/onBoarding": (BuildContext context) => const onBoardingScreen(),
             "/movies": (BuildContext context) => const PopularMoviesScreen(),
-            "/detail":(BuildContext context) => const DetailMovieScreen(),
+            //"/detail":(BuildContext context) => const DetailMovieScreen(),
             "/products":(BuildContext context) => const ProductsFirebaseScreen(),
             "/favorites":(BuildContext context) => const FavoriteMoviesScreen(),
           },

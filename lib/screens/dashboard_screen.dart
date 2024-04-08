@@ -1,6 +1,8 @@
+import 'package:animated_flutter_widgets/animated_widgets.dart';
 import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:psmn2/network/api_popular.dart';
+import 'package:psmn2/screens/popular_movies_screen.dart';
 import 'package:psmn2/settings/app_value_notifier.dart';
 
 class DashBoardScreen extends StatelessWidget {
@@ -28,7 +30,7 @@ class DashBoardScreen extends StatelessWidget {
                 trailing: Icon(Icons.chevron_right),
                 onTap: (){
                   ApiPopular().getSessionId();
-                  Navigator.pushNamed(context, "/movies");
+                  Navigator.push(context, SlideLeftPageAnimation(page: PopularMoviesScreen()));
                 },
               ),
               ListTile( //Se utiliza para manejar titulos y subtitulos en cada elemento, ademas de tener cosas a los lados
