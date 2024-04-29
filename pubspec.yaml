@@ -57,6 +57,14 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   http: ^1.2.1
   animated_flutter_widgets: ^0.0.2
+  google_maps_flutter: ^2.5.3
+  circular_menu: ^3.0.0
+  flutter_polyline_points: ^2.0.0
+  location: ^6.0.1
+  flutter_svg: ^2.0.10+1
+  geolocator: ^11.0.0
+  flutter_map: ^6.1.0
+  latlong2: ^0.9.1
 
 dev_dependencies:
   flutter_test:

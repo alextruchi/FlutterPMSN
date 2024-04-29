@@ -29,9 +29,7 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
 
   //Map<dynamic, dynamic>? arguments;
 
-
-  
-  
+  var comprobador = false;
   final ApiPopular apiPopular = ApiPopular();
   late bool esFavorito;
   //String? sessionId = SessionUsu().getSessionId();
@@ -59,7 +57,11 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
       appBar: AppBar(
         actions: [
           IconButton(onPressed: (){
-            if(esFavorito){
+            if(comprobador == true){
+              var snackbar = SnackBar(content: Text("Ya se ha agregado a favoritos"));
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+            }else{
+              if(esFavorito){
               apiPopular.deleteFavoriteMovie(popularModel.id!, sessionId!).then((value){
                 if(value){
                   var snackbar = SnackBar(content: Text("Se ha eliminado de favoritos"));
@@ -77,19 +79,29 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                 if(value){
                   var snackbar = SnackBar(content: Text("Se ha agregado a favoritos"));
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                  setState(() {
+                    comprobador = true;
+                  });    
                 }else{
                   var snackbar = SnackBar(content: Text("Ya se ha agregado a favoritos"));
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
                 }
               });
             }
+            comprobador = true;
+            }
+            
           },
           icon: esFavorito == true ? Icon(Icons.favorite, color: Colors.red[300],) : Icon(Icons.favorite_outline, color: Colors.red[300],),
         ),
         GestureDetector(
           child: Text("Agregar/Quitar favorito  ", style: TextStyle(fontSize: 16),),
           onTap: () {
-            if(esFavorito){
+            if(comprobador == true){
+              var snackbar = SnackBar(content: Text("Ya se ha agregado a favoritos"));
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+            }else{
+              if(esFavorito){
               apiPopular.deleteFavoriteMovie(popularModel.id!, sessionId!).then((value){
                 if(value){
                   var snackbar = SnackBar(content: Text("Se ha eliminado de favoritos"));
@@ -107,11 +119,16 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                 if(value){
                   var snackbar = SnackBar(content: Text("Se ha agregado a favoritos"));
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                  setState(() {
+                    comprobador = true;
+                  });    
                 }else{
                   var snackbar = SnackBar(content: Text("Ya se ha agregado a favoritos"));
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
                 }
               });
+            }
+            comprobador = true;
             }
           },
         )
@@ -150,7 +167,7 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                         controller: YoutubePlayerController(
                             initialVideoId: snapshot.data.toString(),
                             flags: const YoutubePlayerFlags(
-                              autoPlay: true,
+                              autoPlay: false,
                               mute: true,
                             )),
                       );

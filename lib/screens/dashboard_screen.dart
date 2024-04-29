@@ -59,6 +59,13 @@ class DashBoardScreen extends StatelessWidget {
                   Navigator.pop(context);
                 },
               ),
+              ListTile( //Se utiliza para manejar titulos y subtitulos en cada elemento, ademas de tener cosas a los lados
+                leading: Icon(Icons.shop),
+                title: Text("Mi mapas"),
+                subtitle: Text("Mapa de ejemplo de google"),
+                trailing: Icon(Icons.chevron_right),
+                onTap:() => Navigator.pushNamed(context, '/maps'),
+              ),
               DayNightSwitcher(
               isDarkModeEnabled: AppValueNotifiier.banTheme.value,
               onStateChanged: (isDarkModeEnabled) {//Quitamos la parte del setState ya que eso solo seria para la pantalla actual

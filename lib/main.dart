@@ -4,6 +4,7 @@ import 'package:psmn2/screens/dashboard_screen.dart';
 import 'package:psmn2/screens/despensa.dart';
 import 'package:psmn2/screens/detail_movie_screen.dart';
 import 'package:psmn2/screens/favorite_movies_screen.dart';
+import 'package:psmn2/screens/maps_screen.dart';
 import 'package:psmn2/screens/onBoarding_screen.dart';
 import 'package:psmn2/screens/popular_movies_screen.dart';
 import 'package:psmn2/screens/register_screen.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
             //"/detail":(BuildContext context) => const DetailMovieScreen(),
             "/products":(BuildContext context) => const ProductsFirebaseScreen(),
             "/favorites":(BuildContext context) => const FavoriteMoviesScreen(),
+            "/maps":(BuildContext context) => const MapSample(),
           },
         );
       }
