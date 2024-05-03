@@ -1,6 +1,10 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:provider/provider.dart';
+import 'package:psmn2/provider/login_provider.dart';
 import 'package:psmn2/screens/dashboard_screen.dart';
 import 'package:psmn2/services/email_auth_firebase.dart';
 
@@ -19,8 +23,10 @@ class _loginScreenState extends State<loginScreen> {
   final conEmail = TextEditingController();
   final conContra = TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
+    final loginprovider = Provider.of<LoginProvider>(context);
 
     final textUser = TextFormField(
     keyboardType: TextInputType.emailAddress,
@@ -88,9 +94,9 @@ class _loginScreenState extends State<loginScreen> {
                   SignInButton(
                     Buttons.Email,
                     onPressed: () {
-                      setState(() { //Con esto se cambia el valor de is loading provocando lo de abajo
+                      /*setState(() { //Con esto se cambia el valor de is loading provocando lo de abajo
                         isloading = !isloading;
-                      });
+                      });*/
                       //Se cambiara esto para poder hacer el login
                       /*Future.delayed(new Duration(milliseconds: 5000), () {
                         //Al manejar rutas ya no se usa esto
@@ -104,6 +110,9 @@ class _loginScreenState extends State<loginScreen> {
                           });
                       });*/
                       //Tambien se debe de hacer esto para que tenga el mismo comportamiento del await
+
+                      loginprovider.isLogued = true; //Esto provocara que se borre toda la pila de las pantalla y se vuelva a empezar de 0
+
                       authfirebase.signInUser(password: conContra.text, email: conEmail.text).then((value) {
                         //Esto aplicaria cuando no sea el login
                         if(!value){

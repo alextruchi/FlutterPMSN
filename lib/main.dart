@@ -1,9 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:psmn2/provider/login_provider.dart';
 import 'package:psmn2/screens/dashboard_screen.dart';
 import 'package:psmn2/screens/despensa.dart';
 import 'package:psmn2/screens/detail_movie_screen.dart';
 import 'package:psmn2/screens/favorite_movies_screen.dart';
+import 'package:psmn2/screens/login_screen.dart';
 import 'package:psmn2/screens/maps_screen.dart';
 import 'package:psmn2/screens/onBoarding_screen.dart';
 import 'package:psmn2/screens/popular_movies_screen.dart';
@@ -33,6 +36,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //Siempre se debe de instanciar en caso de usarse
+    final loginprovider = Provider.of<LoginProvider>(context);
     return ValueListenableBuilder(//Tendremos que envolver a materialApp en un builder para recibir el cambio del tema
       valueListenable: AppValueNotifiier.banTheme,
       builder: (context, value, child) {
@@ -40,7 +45,8 @@ class MyApp extends StatelessWidget {
           theme: value 
           ? ThemeApp().darkTheme(context)
           : ThemeApp().lightTheme(context),
-          home: splashScreen(),
+          //home: splashScreen(),
+          home: loginprovider.isLogued ? DashBoardScreen() : loginScreen(),
           debugShowCheckedModeBanner: false,
           routes: { //Ponerle const hace que sea mas eficiente abrir un stateless
             "/dash" : (BuildContext context) => const DashBoardScreen(),
